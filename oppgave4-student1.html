@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 4 - Student 1</title>
+</head>
+<body>
+    
+    
+    <img src="../images/fem-hundre-kroner.png" alt="fem-hundre-kroner" id="money-1">
+    <img src="../images/fem-hundre-kroner.png" alt="fem-hundre-kroner" id="money-2">
+    <img src="../images/fem-hundre-kroner.png" alt="fem-hundre-kroner" id="money-3">
+    <img src="../images/fem-hundre-kroner.png" alt="fem-hundre-kroner" id="money-4">
+    <img src="../images/fem-hundre-kroner.png" alt="fem-hundre-kroner" id="money-5">
+    <img src="../images/fem-hundre-kroner.png" alt="fem-hundre-kroner" id="money-6">
+    <img src="../images/fem-hundre-kroner.png" alt="fem-hundre-kroner" id="money-7">
+    <img src="../images/fem-hundre-kroner.png" alt="fem-hundre-kroner" id="money-8">
+
+    <div id="money-1"></div>
+    <input type="button" value="Withdraw 500kr" id="trekk-btn">
+    <input type="button" value="Deposit 500kr" id="sett-btn">
+    <div id="money-2"></div>
+    <div id="output-div">Balance: 2000</div>
+    <div id="output-div2"> Wallet: 0</div>
+    
+
+    <script>
+
+        //HTML-objekter
+
+        var money1 = document.getElementById("money-1");
+        var money2 = document.getElementById("money-2");
+        var money3 = document.getElementById("money-3");
+        var money4 = document.getElementById("money-4");
+        var money5 = document.getElementById("money-5");
+        var money6 = document.getElementById("money-6");
+        var money7 = document.getElementById("money-7");
+        var money8 = document.getElementById("money-8");
+
+        var outBtn = document.getElementById("trekk-btn");
+        var inBtn = document.getElementById("sett-btn");
+        var outputDiv = document.getElementById("output-div");
+        var outputDiv2 = document.getElementById("output-div2");
+
+        //variabler
+
+        var balance = 2000;
+        var wallet = 0;
+        var answer = false;
+
+        //while-loop for PIN-kode innlogging
+        while (answer != true){
+            var pin = prompt ("input your PIN-kode to log inn (hint: 123_)");
+            if(pin == 1234){
+                alert("Welcome");
+                answer = true;
+            }else{
+                alert("Wrong PIN, try again");
+            }
+        }
+
+        //funksjon for å ta ut penger
+        function withdrawMoney(){
+
+            if (balance >= 500){
+                balance -= 500;
+                wallet += 500;
+                moneyOut();
+                moneyTracker();
+        
+        //funksjon med alert til bruker når de er tomme for penger
+            }else if (balance <=0) {
+                alert("Out of money, put in more money to withdraw")
+                moneyOut();
+                moneyTracker();
+                balance = 0;
+            }
+        }
+
+        //funksjon for å sette inn penger
+        function depositMoney(){
+
+            if (balance <= 1500){
+                balance += 500;
+                wallet -= 500;
+                console.log(balance);
+                moneyIn();
+                moneyTracker();
+        //funksjon for å stoppe bruker fra å kunne sette inn mer enn de eier
+            }else if(balance >= 2000){
+                moneyIn();
+                moneyTracker();
+                alert("Do you think money grows on trees?");
+                balance = 2000;
+            }
+        }
+
+
+        //funksjon for å få penge-bildene til å gå til bruker sin wallet
+        function moneyOut() {
+            if (balance == 1500) {
+                money1.style.display = "none";
+                money5.style.display = "block";
+                
+            }if(balance == 1000) {
+                money2.style.display = "none";
+                money6.style.display = "block";
+                
+            }if(balance == 500) {
+                money3.style.display = "none";
+                money7.style.display = "block";
+            
+            }if(balance == 0) {
+                money4.style.display = "none";
+                money8.style.display = "block";
+            }
+        }
+
+        //funksjon for å få penge-bildene til å gå fra bruker sin wallet tilbake til konto
+        function moneyIn() {
+            if (balance == 2000) {
+                money1.style.display = "block";
+                money5.style.display = "none";
+                
+            }if (balance == 1500) {
+                money2.style.display = "block";
+                money6.style.display = "none";
+                
+            }if (balance == 1000) {
+                money3.style.display = "block";
+                money7.style.display = "none";
+            
+            }if (balance == 500) {
+                money4.style.display = "block";
+                money8.style.display = "none";
+            }
+        }
+        
+        //funksjon for å holde følge med saldo in og ut av konto
+        function moneyTracker() {
+            outputDiv.innerHTML = `<p>balance: ${balance}</p>`;
+            outputDiv2.innerHTML = `<p>wallet: ${wallet}</p>`;
+        }
+
+        //javascript CSS styling
+        outputDiv.style.position = "absolute";
+        outputDiv.style.left = "1000px";
+        outputDiv.style.top = "150px";
+
+        outputDiv2.style.position = "absolute";
+        outputDiv2.style.left = "50px";
+        outputDiv2.style.top = "150px";
+        
+        outBtn.style.position = "absolute";
+        outBtn.style.left = "1000px";
+        outBtn.style.top = "200px";
+
+        inBtn.style.position = "absolute";
+        inBtn.style.left = "50px";
+        inBtn.style.top = "200px";
+
+        money1.style.position = "absolute";
+        money1.style.left = "950px";
+        money1.style.top = "300px";
+
+        money2.style.position = "absolute";
+        money2.style.left = "950px";
+        money2.style.top = "350px";
+
+        money3.style.position = "absolute";
+        money3.style.left = "950px";
+        money3.style.top = "400px";
+
+
+        money4.style.position = "absolute";
+        money4.style.left = "950px";
+        money4.style.top = "450px";
+        
+        money5.style.position = "absolute";
+        money5.style.display = "none";
+        money5.style.left = "50px";
+        money5.style.top = "300px";
+
+        money6.style.position = "absolute";
+        money6.style.display = "none";
+        money6.style.left = "50px";
+        money6.style.top = "350px";
+
+        money7.style.position = "absolute";
+        money7.style.display = "none";
+        money7.style.left = "50px";
+        money7.style.top = "400px";
+        
+        money8.style.position = "absolute";
+        money8.style.display = "none";
+        money8.style.left = "50px";
+        money8.style.top = "450px";
+
+
+        //on-click events
+        outBtn.onclick = withdrawMoney;
+        inBtn.onclick = depositMoney;
+
+    
+    </script>
+    
+</body>
+</html>

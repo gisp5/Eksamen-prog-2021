@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 3 - Middelalderbygninger</title>
+</head>
+<body>
+
+    <!-- Det er lov å endre/legge til HTML -->
+
+    <h1>Middle ages Buildings</h1>
+    <p>Want to live in a building from the middle ages? We have the best houses/buildings/fucking castles!</p>
+
+    <input id="show-all-btn" type="button" value="Show All">
+
+    <hr>
+
+    <label>Minimum price</label>
+    <input type="text" id="minimum-box">
+    <label>Maximum price</label>
+    <input type="text" id="maximum-box">
+    <input type="button" value="Sort by price" id="price-btn">
+
+    <hr>
+
+    <!-- Hint: Å hente value fra valgt <option> fungerer på samme måte som å hente value fra en tekstboks -->
+    <select id="category-select"><!-- Du endrer på options for å tilpasse til din løsning -->
+        <option>--Choose category--</option>
+        <option value="Storage">Storage</option>
+        <option value="Simple">Simple</option>
+        <option value="Two-floors">Two-floors</option>
+        <option value="Appartements">Appartements</option>
+        <option value="Castles">Castles</option>
+        <option value="Mansions">Mansions</option>
+    </select>
+    <input type="button" value="Sort by categories" id="category-btn">
+
+    <hr>
+
+    <div id="output-div"></div>
+
+    <script>
+
+        //HTML-objekter
+        var showAllBtn = document.getElementById("show-all-btn");
+        var priceBtn = document.getElementById("price-btn");
+        var categoryBtn = document.getElementById("category-btn");
+        var outputDiv = document.getElementById("output-div");
+
+        //Array
+        var houseArray = [
+            {
+                name : "Storage shed",
+                price : 500,
+                image : "../images/building-1.png",
+                category : "Storage"},
+            {
+                name : "Simple house",
+                price : 1000,
+                image : "../images/building-2.png",
+                category : "Simple"},
+            {
+                name : "Two-floor house",
+                price : 1500,
+                image : "../images/building-3.png",
+                category : "Two-floors"},
+            {
+                name : "Appartment Complex",
+                price : 3000,
+                image : "../images/building-4.png",
+                category : "Appartements"},
+            {
+                name : "Gigantic Castle",
+                price : 10000,
+                image : "../images/building-5.png",
+                category : "Castles"},
+            {
+                name : "Dracula's Mansion",
+                price : 6000,
+                image : "../images/building-6.png",
+                category : "Mansions"
+            }
+        ]
+        //funksjon for når bruker trykker på "vis alle" som kjører alt som er inni arrayet
+        function showAll (){
+            outputDiv.innerHTML = "";
+
+            for (var i = 0; i < houseArray.length; i++){
+                    outputDiv.innerHTML += `<h3>${houseArray[i].category}</h3>`;
+                    outputDiv.innerHTML += `<h5>${houseArray[i].name}</h5>`;
+                    outputDiv.innerHTML += `<img src="${houseArray[i].image}"><br>`;
+                    outputDiv.innerHTML += `<h7><strong>price:</strong> ${houseArray[i].price} gold</h7>`;
+            }
+        }
+
+        //funksjon som leser gjennom hva bruker har tastet inn i minium/maksimum boksene og finner objekter i arrayet innenfor den prisrangeringen
+        function orderByPrice (){
+            var minBox = document.getElementById("minimum-box").value;
+            var maxBox = document.getElementById("maximum-box").value;
+            var priceArray = [];
+
+            outputDiv.innerHTML = "";
+
+            for (var i = 0; i < houseArray.length; i++){ 
+
+                if (minBox <= houseArray[i].price && maxBox >= houseArray[i].price){
+                
+                    priceArray.push(houseArray[i])
+                }
+            }
+            if (priceArray < 500){
+                outputDiv.innerHTML = `<p>No houses within this price range.</p>`
+            }else{
+                for (var i = 0; i < priceArray.length; i++){
+                    outputDiv.innerHTML += `<h3>${priceArray[i].category}</h3>`;
+                    outputDiv.innerHTML += `<h5>${priceArray[i].name}</h5>`;
+                    outputDiv.innerHTML += `<img src="${priceArray[i].image}"><br>`;
+                    outputDiv.innerHTML += `<h7><strong>price:</strong> ${priceArray[i].price} gold</h7>`;
+                }
+            }
+        }
+
+        //funksjon som henter objekter etter bruker sin input på "vis kategori" boksen
+        function showCategory (){
+
+            var categorySelect = document.getElementById("category-select").value
+            var categoryArray = [];
+
+            outputDiv.innerHTML = "";
+
+            for (var i = 0; i < houseArray.length; i++){ 
+
+                if (categorySelect == houseArray[i].category){ 
+                
+                    categoryArray.push(houseArray[i])
+                
+                for (var i = 0; i < houseArray.length; i++){
+                    outputDiv.innerHTML += `<h3>${categoryArray[i].category}</h3>`;
+                    outputDiv.innerHTML += `<h5>${categoryArray[i].name}</h5>`;
+                    outputDiv.innerHTML += `<img src="${categoryArray[i].image}"><br>`;
+                    outputDiv.innerHTML += `<h7><strong>price:</strong> ${categoryArray[i].price} gold</h7>`;
+                }
+            }
+        }
+    }
+
+
+        //on-click events
+        categoryBtn.onclick = showCategory;
+        showAllBtn.onclick = showAll;
+        priceBtn.onclick = orderByPrice;
+        
+
+
+    </script>
+
+</body>
+</html>

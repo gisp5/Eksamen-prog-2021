@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 2 - Dragracing</title>
+    <link rel="stylesheet" href="css/oppgave2.css">
+</head>
+<body>
+
+    <h1>Dragracing</h1>
+
+    <div id="road-div"></div>
+    
+    <img id="blue-car" src="images/blue-car.png">
+    <img id="green-car" src="images/green-car.png">
+    <img id="red-car" src="images/red-car.png">
+
+    <div id="finish-line"></div>
+
+    <div id="output-div"></div>
+
+    <input type="button" value="start race" id="start-btn">
+
+    <script>
+
+        //HTML-objekter
+        var roadDiv = document.getElementById("road-div");
+        var blueCar = document.getElementById("blue-car");
+        var greenCar = document.getElementById("green-car");
+        var redCar = document.getElementById("red-car");
+        var finishLine = document.getElementById("finish-line");
+        var outputDiv = document.getElementById("output-div");
+        var startBtn = document.getElementById("start-btn");
+
+        //Variabler
+        var blueP = false;
+        var greenP = false;
+        var redP = false;
+
+        var interval
+
+        /*Funksjon som leser bilen sin posisjon og oppdatere den med et tilfeldig tall fra 0-200 (dette blir oppdatert i pixler)
+        Lengre ned har vi lagt til if else for når en bil krysser finalelinja, og tatt med oss uavgjorte utfall også.
+        Helst til slutt har vi fått med oss en Interval funksjon som går av hvert andre sekund*/
+        function carMove (){
+            var bluePosition = parseInt(blueCar.style.left || 0);
+            var greenPosition = parseInt(greenCar.style.left || 0);
+            var redPosition = parseInt(redCar.style.left || 0);
+
+            if (bluePosition < 700  && greenPosition < 700 && redPosition < 700){
+
+            var randomMovement1 = Math.floor(Math.random()*200);
+            var randomMovement2 = Math.floor(Math.random()*200);
+            var randomMovement3 = Math.floor(Math.random()*200);
+            
+            blueCar.style.left = `${randomMovement1 + parseInt(blueCar.style.left || 0)}px`;
+            greenCar.style.left = `${randomMovement2 + greenPosition}px`;
+            redCar.style.left = `${randomMovement3 + redPosition}px`;
+
+            }else{
+                if (greenPosition >= 700 && redPosition >= 700 && bluePosition >= 700) {
+                    alert("Everyone Draws!!!!")
+                }else if(greenPosition >= 700 && redPosition >= 700){
+                    alert("Red and green car draw!");
+                }else if (greenPosition >= 700 && bluePosition >= 700){
+                    alert("Green and blue car draw!");
+                }else if(redPosition >= 700 && bluePosition >= 700){
+                    alert("Red and blue car draw!");
+                }else if (bluePosition >= 700) {
+                    alert("Blue car wins!");
+                }else if (greenPosition >= 700) {
+                    alert("Green car wins!");
+                }else if (redPosition >= 700) {
+                    alert("Red car wins!");
+                }
+            clearInterval (interval)    
+            }
+        } 
+        function interval(){
+            interval = setInterval(carMove, 2000);
+        }
+        startBtn.style.position = "absolute";
+        startBtn.style.left = "50px";
+        startBtn.style.top = "500px";
+
+        //on-clcik event for å begynne dragracet
+        startBtn.onclick = interval;
+
+    </script>
+
+</body>
+</html>

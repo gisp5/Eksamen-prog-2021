@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 1</title>
+    <link rel="stylesheet" type="text/css" href="css/oppgave1.css">
+</head>
+<body>
+
+    <!-- Det er lov å endre/legge til HTML -->
+
+    <h1>Modern Art Maker</h1>
+
+    <label>Width</label>    
+    <input id="width-txt" type="text">
+
+    <label>Height</label>
+    <input id="height-txt" type="text">
+
+    <hr>
+
+    <label>Color</label>
+    <input id="background-color-txt" type="text">
+
+    <hr>
+
+    <label>Position from left</label>
+    <input id="left-txt" type="text">
+
+    <label>Position from top</label>
+    <input id="top-txt" type="text">
+
+    <hr>
+
+    <input id="add-box-btn" type="button" value="Add">
+
+    <p id="status-p">Number of boxes: 0</p>
+
+    <div id="output-div"></div>
+
+    <div id="box-div"></div>
+
+    <script>
+
+        //HTML-objekter
+        var widthInput = document.getElementById ("width-txt");
+        var heightInput = document.getElementById ("height-txt");
+        var colorInput = document.getElementById ("background-color-txt");
+        var leftInput = document.getElementById ("left-txt");
+        var topInput = document.getElementById ("top-txt");
+        var addBoxBtn = document.getElementById ("add-box-btn");
+        var statusP = document.getElementById ("status-p");
+        var outputDiv = document.getElementById ("output-div");
+
+        //variabel
+        var addedBoxes = 0;
+
+        /*funksjon som leser om bruker har tastet inn noe på alle feltene nødvendig
+        etter dette kjører en else som putter inn disse verdiene og lager en div med bruker sin styling*/
+        function createBox(){
+            if (widthInput.value === "" || heightInput.value === "" || colorInput.value === "" || leftInput.value === "" || topInput.value === "") {
+                alert("You need to add values to all fields!");
+            } else {
+                addedBoxes ++;
+                outputDiv.innerHTML += `<div style="width: ${widthInput.value}px; height: ${heightInput.value}px; background-color: ${colorInput.value}; left: ${leftInput.value}px; top: ${topInput.value}px;"></div>`;            
+                statusP.innerHTML = `Number of boxes: ${addedBoxes}`;
+            }
+        }
+
+        //on-click event for å kjøre de ønskede verdiene inn på nettsiden
+        addBoxBtn.onclick = createBox;
+    </script>
+    
+    </body>
+</html>

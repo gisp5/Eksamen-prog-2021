@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppgave 4 - Student 2</title>
+</head>
+<body>
+    <h1 id="Header">Can you remember the number?</h1>
+    <div id="wrong-div">Wrong: 0</div>
+    <div id="right-div">Correct: 0</div>
+    
+    <button id="Game-Start">Start game</button>
+    
+    <div id="Hidden-Number"></div>
+    <script>
+
+        //HTML-objekter
+        var header = document.getElementById("Header");
+        var hiddenNumber = document.getElementById("Hidden-Number");
+        var rightDiv = document.getElementById("right-div");
+        var wrongDiv = document.getElementById("wrong-div");
+        var gameStart = document.getElementById("Game-Start");
+        
+        //Variabler
+        var correctAnswer;
+        var userAnswer;
+        var right = 0;
+        var wrong = 0;
+        
+        //Funksjon som fjerner start knappen og tilfeldiggjør posisjonen på tallet som skal komme opp
+        function randomizer() {
+            gameStart.remove();
+            var randomNumber = Math.floor(Math.random()*10);
+            var randomPositionTop = Math.floor(Math.random()*500);
+            var randomPositionLeft = Math.floor(Math.random()*1600);
+            hiddenNumber.style.left = `${randomPositionLeft + 100}px`;
+            hiddenNumber.style.top = `${randomPositionTop}px`;
+            correctAnswer = `${randomNumber}`
+            hiddenNumber.innerHTML = `${correctAnswer}`;
+            memoryGame();
+            console.log(hiddenNumber);
+        }
+        
+        //Funksjon som setter en timer på når tallet dukker opp og hvor lenge det blir.
+        function memoryGame(){
+            hiddenNumber.style.opacity ='1';
+            setTimeout(function(){
+            hiddenNumber.style.opacity ='0';}
+            ,200);
+            answerPrompt();
+        }
+
+        //Funksjon som får opp prompt hvor bruker kan svare på hvilket tall som dukket opp
+        function answerPrompt() {
+            setTimeout(function(){
+                userAnswer =prompt("What was the number?");
+            },1500);
+            setTimeout(function(){rightOrWrong()},3000);
+        }
+        //Funksjon som teller antall feil og riktige
+        function rightOrWrong (){
+            if(userAnswer == correctAnswer){ 
+            right++;
+            rightDiv.innerHTML = `Correct: ${right}`;
+            randomizer();
+        }else{
+            wrong++;
+            wrongDiv.innerHTML = `Wrong: ${wrong}`;
+            randomizer();
+            }
+        }
+
+
+        //CSS styling med javascript
+        hiddenNumber.style.opacity = "0";
+        hiddenNumber.style.position = "absolute";
+        hiddenNumber.style.transform = "translate(-50%,-50%";
+        hiddenNumber.style.fontSize = "200px";
+
+        gameStart.style.position ="absolute";
+        gameStart.style.height = "300px";
+        gameStart.style.width = "500px";
+        gameStart.style.fontSize = "60px";
+        gameStart.style.left = "50%";
+        gameStart.style.top = "40%";
+        gameStart.style.transform = "translate(-50%,-50%";
+
+        //On-click event for å starte spillet
+        gameStart.onclick = randomizer;
+
+
+
+    </script>
+</body>
+</html>
